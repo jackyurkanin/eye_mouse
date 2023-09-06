@@ -10,8 +10,9 @@
 
 # machine vision
 
-- detect eyes using ML program trained for detecting eyes.
-- single eye closed detection, detects number of eyes in image.
+- detect eyes using openCV.
+- single eye closed detection based on previous eye locations.
+- returns state of eyes with 1 (open) or 0 (closed)
 
 - potentially learn where a person is looking based on real-time training
   - random dot generator and look at the dot and hit a button
