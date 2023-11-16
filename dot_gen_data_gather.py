@@ -2,6 +2,7 @@
 
 ########## IMPORTS #################
 from screeninfo import get_monitors
+from face_eye_detection import face_and_eye_detector
 import numpy as np
 import cv2
 import random
@@ -25,7 +26,7 @@ def on_click(x, y, button, pressed):
         CLICK_COUNT += 1
         print(f"Mouse clicked at ({x}, {y}) with {button}")
 
-def generate_screen(width, height):
+def generate_and_gather(width, height):
     """
     Generates a black canvas to draw on and gather data for training
 
@@ -39,6 +40,15 @@ def generate_screen(width, height):
     listener = Listener(on_click=on_click)
     listener.start()
     previous = 0
+
+    face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+    eyes_cascade = cv2.CascadeClassifier('haarcascade_eye_tree_eyeglasses.xml')
+    cap = cv2.VideoCapture(0)
+
+    if not cap.isOpened():
+        print("Error: could not open camera")
+        exit()
+    
     print('Make fullscreen')
     while CLICK_COUNT < MAX_CLICKS: # check if done gathering
         if CLICK_COUNT > previous: # check if click was made and need to draw new dot
@@ -73,13 +83,16 @@ def draw(img, pixel, coord, height, width):
                     img[pix[0],pix[1]] = pixel
     return img
 
-def take_photo():
+def gathering_data(cap, face_cascade, eyes_cascade):
     """
-    takes a photo here and returns the photo as an np.array
+    Saving my images and location encodings
     """
-
-
-    return 
+    _, img = cap.read()
+    result = face_and_eye_detector(img, face_cascade, eyes_cascade)
+    if result:
+        if len(result[2]) == 2:
+            ## need to finish 
+            raise NotImplementedError
 
 if __name__ == "__main__":
     # Get the screen resolution
@@ -87,4 +100,7 @@ if __name__ == "__main__":
     # print(width, height)
     # width, height = 600, 600 # test
     # create screen
-    generate_screen(width, height)
+    #generate_and_gather(width, height)
+    cap = cv2.VideoCapture(0)
+    _, pic = cap.read()
+    print(pic)
