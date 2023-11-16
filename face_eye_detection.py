@@ -31,7 +31,7 @@ class Eye:
         self.location = new_loc
         self.state = 1
     def check_state(self, loc):
-        if abs(loc[0] - self.location[0]) > 20:
+        if abs(loc[0] - self.location[0]) > 20 or abs(loc[1] - self.location[1]) > 20:
             self.state = 0
 
 
@@ -112,6 +112,9 @@ def false_eye_eliminator(eyes):
     else:
         real_eyes = sorted(eyes, key=lambda eye: eye[0])
     
+
+    ##### need to account for if eye closes and mv decideds to use nose as eye
+    ### although i think it still works
     return real_eyes
 
 

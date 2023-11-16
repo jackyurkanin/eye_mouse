@@ -24,6 +24,7 @@ def on_click(x, y, button, pressed):
     global CLICK_COUNT
     if pressed:
         CLICK_COUNT += 1
+        
         print(f"Mouse clicked at ({x}, {y}) with {button}")
 
 def generate_and_gather(width, height):
@@ -92,7 +93,19 @@ def gathering_data(cap, face_cascade, eyes_cascade):
     if result:
         if len(result[2]) == 2:
             ## need to finish 
+            # need to read location from a topic
+
             raise NotImplementedError
+        
+
+
+def encoding_pic_and_loc():
+    """
+    function for turning the images 
+    and location into a format that can be saved
+
+    input: face img, eyes img, (X, Y)
+    """
 
 if __name__ == "__main__":
     # Get the screen resolution
